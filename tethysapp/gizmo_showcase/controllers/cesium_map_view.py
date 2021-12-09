@@ -7,21 +7,23 @@ from .common import docs_endpoint
 
 
 @login_required()
-def cesium_map_view(request, type='home'):
+def cesium_map_view(request):
     """
     Controller for the Cesium Map View page.
     """
     # Get the access token
     cesium_ion_token = request.GET.get('cesium-ion-token', '')
+    type = request.GET.get('type', 'home')
 
     # Define nav link
-    home_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'home'})
-    map_layers_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'map_layers'})
-    terrain_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'terrain'})
-    czml_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'czml'})
-    geojson_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'geojson'})
-    model_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'model'})
-    model2_link = reverse('gizmos:cesium_map_view', kwargs={'type': 'model2'})
+    base_url = reverse('gizmo_showcase:cesium_map_view')
+    home_link = f"{base_url}?type=home"
+    map_layers_link = f"{base_url}?type=map_layers"
+    terrain_link = f"{base_url}?type=terrain"
+    czml_link = f"{base_url}?type=czml"
+    geojson_link = f"{base_url}?type=geojson"
+    model_link = f"{base_url}?type=model"
+    model2_link = f"{base_url}?type=model2"
 
     # Add cesium ion token GET parameters of all header links if provided
     if cesium_ion_token:
