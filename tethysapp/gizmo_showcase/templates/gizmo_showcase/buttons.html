@@ -4,14 +4,21 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>Buttons and Button Groups</h2>
+<p>The <code>Button</code> and <code>ButtonGroup</code> gizmos can be used to generate a single button or a group of buttons, respectively. Groups of buttons can be stacked horizontally or vertically. This gizmo is a wrapper for <a href="https://getbootstrap.com/docs/5.1/components/buttons/" target="_blank">Bootstrap buttons</a>.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/button.html">Button and Button Group</a>.</p>
+<div class="demo">
+    <h6 class="label">A Single Button</h6>
+    {% gizmo button single_button %}
+</div>
+<div class="demo">
+    <h6 class="label">Horizontal Button Group</h6>
+    {% gizmo horizontal_buttons %}
+</div>
+<div class="demo">
+    <h6 class="label">Vertical Button Group</h6>
+    {% gizmo button_group vertical_buttons %}
+</div>
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

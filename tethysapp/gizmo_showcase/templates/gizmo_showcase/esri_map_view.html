@@ -4,14 +4,10 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>ESRI Map View</h2>
+<p>The ESRI Map gizmo can be used to visualize ESRI ArcGIS web maps and layers. ESRI Map is powered by <a href="https://developers.arcgis.com/javascript/" target="_blank">ArcGIS API for Javascript</a>.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/esri_map.html">ESRI Map</a>.</p>
+{% gizmo esri_map esri_map %}
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

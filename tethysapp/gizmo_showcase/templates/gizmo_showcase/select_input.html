@@ -4,14 +4,20 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>Select Input</h2>
+<p>Select inputs are used to select values from an given set of values. Use this gizmo to create select inputs and multi select inputs. This uses the <a href="http://ivaynberg.github.io/select2/" target="_blank">Select2</a> functionality.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/select_input.html">Select Input</a>.</p>
+<div class="demo">
+    <h6 class="label">Select2 Input</h6>
+    {% gizmo select_input select_input2 %}
+    {% gizmo select_input2_multiple %}
+    {% gizmo select_input select_input2_error %}
+</div>
+<div class="demo">
+    <h6 class="label">Normal Select Input</h6>
+    {% gizmo select_input %}
+    {% gizmo select_input_multiple %}
+</div>
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

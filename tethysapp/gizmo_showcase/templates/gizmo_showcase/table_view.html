@@ -4,14 +4,17 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>Table View</h2>
+<p>Table views can be used to display tabular data. The table view gizmo can be configured to have columns that are editable. When used in this capacity, embed the table view in a form with a submit button. Table View gizmos are styled with <a href="https://getbootstrap.com/docs/5.1/content/tables/" target="_blank">Bootstrap</a>.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/table_view.html">Table View</a>.</p>
+<div class="demo">
+    <h6 class="label">Table View</h6>
+    {% gizmo table_view table_view %}
+</div>
+<div class="demo">
+  <h6 class="label">Editable Table View</h6>
+  {% gizmo table_view table_view_edit %}
+</div>
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

@@ -4,14 +4,13 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>Jobs Table</h2>
+<p>The Jobs Table gizmo can be used to track the progress of jobs that are processing.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/jobs_table.html">Jobs Table</a>.</p>
+{% gizmo jobs_table %}
+{% if not jobs_table.jobs %}
+    <a class="btn btn-success" href="{% url 'gizmo_showcase:jobs_table_sample_jobs' %}">Create Sample Jobs</a>
+{% endif %}
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

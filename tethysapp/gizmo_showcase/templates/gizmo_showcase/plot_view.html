@@ -4,14 +4,63 @@
 {% block title %}{{ block.super }} - Quick Start{% endblock %}
 
 {% block app_content %}
-  <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+<h2>Plot View</h2>
+<p>Plot views can be used to generate plots of tabular data. Plot View has two rendering engines: <a href="https://www.highcharts.com/products/highcharts/" target="_blank">Highcharts JS</a> and <a href="https://d3js.org" target="_blank">D3.js</a>. Both plotting libraries are powerful, but Highcharts is only free to use in certain circumstances.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/plot_view.html">Plot View</a>.</p>
+
+<h3>Highcharts Example</h3>
+<div class="alert alert-warning" role="alert">
+    <span class="alert-header">Caution</span>
+    <p>Highcharts is not free and open source, though it can be used for free under certain conditions. Please familiarize yourself with <a href="https://shop.highsoft.com" target="_blank">Highcharts JS Licensing</a> before using it.</p>
+</div>
+<div class="demo">
+    {% gizmo line_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo scatter_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo web_plot %}
+</div>
+
+<div class="demo">
+    {% gizmo pie_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo bar_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo timeseries_plot %}
+</div>
+
+<div class="demo">
+    {% gizmo area_range_plot %}
+</div>
+
+<h3>D3.js Examples</h3>
+<div class="demo">
+    {% gizmo d3_line_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo d3_pie_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo d3_scatter_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo d3_bar_plot_view %}
+</div>
+
+<div class="demo">
+    {% gizmo d3_timeseries_plot_view %}
+</div>
 {% endblock %}
 
 {# Use the after_app_content block for modals #}

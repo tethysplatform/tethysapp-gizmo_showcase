@@ -87,30 +87,38 @@ class GizmoShowcase(TethysAppBase):
             UrlMap(
                 name='map_view',
                 url='gizmo-showcase/map-view',
-                controller='gizmo_showcase.controllers.maps.map_view'
+                controller='gizmo_showcase.controllers.map_view.map_view'
             ),
             UrlMap(
                 name='esri_map_view',
                 url='gizmo-showcase/esri-map-view',
-                controller='gizmo_showcase.controllers.maps.esri_map_view'
+                controller='gizmo_showcase.controllers.esri_map_view.esri_map_view'
             ),
             UrlMap(
                 name='cesium_map_view',
                 url='gizmo-showcase/cesium-map-view',
-                controller='gizmo_showcase.controllers.maps.cesium_map_view'
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view'
             ),
             UrlMap(
                 name='jobs_table',
                 url='gizmo-showcase/jobs-table',
                 controller='gizmo_showcase.controllers.processing.jobs_table'
             ),
-
+            UrlMap(
+                name='jobs_table_results',
+                url='gizmo-showcase/jobs-table/{job_id}/results',
+                controller='gizmo_showcase.controllers.processing.jobs_table_results'
+            ),
+            UrlMap(
+                name='jobs_table_sample_jobs',
+                url='gizmo-showcase/jobs-table/sample-jobs',
+                controller='gizmo_showcase.controllers.processing.create_sample_jobs'
+            ),
             UrlMap(
                 name='message_box',
                 url='gizmo-showcase/message-box',
                 controller='gizmo_showcase.controllers.other.message_box'
             ),
-            
         )
 
         return url_maps
