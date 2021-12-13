@@ -14,6 +14,7 @@ def buttons(request):
     single_button = Button(
         display_text='Click Me',
         name='click_me_name',
+        icon='menu-up',
         attributes='onclick=alert(this.name);',
         submit=True
     )
@@ -21,14 +22,16 @@ def buttons(request):
     # Horizontal Button Group
     add_button = Button(
         display_text='Add',
-        icon='glyphicon glyphicon-plus',
-        style='success'
+        icon='plus-circle-fill',
+        style='outline-success',
+        classes='btn-lg'
     )
     delete_button = Button(
         display_text='Delete',
-        icon='glyphicon glyphicon-trash',
+        icon='trash2-fill',
         disabled=True,
-        style='danger'
+        style='outline-danger',
+        classes='btn-lg'
     )
     horizontal_buttons = ButtonGroup(
         buttons=[add_button, delete_button]
@@ -37,19 +40,19 @@ def buttons(request):
     # Vertical Button Group
     edit_button = Button(
         display_text='Edit',
-        icon='glyphicon glyphicon-wrench',
+        icon='tools',
         style='warning',
         attributes='id="edit button" new_attr=attr'
     )
     info_button = Button(
         display_text='Info',
-        icon='glyphicon glyphicon-question-sign',
+        icon='info-circle',
         style='info',
         attributes='name=info'
     )
     apps_button = Button(
         display_text='Apps',
-        icon='glyphicon glyphicon-home',
+        icon='app',
         href='/apps',
         style='primary'
     )
@@ -124,11 +127,21 @@ def range_slider(request):
         disabled=True,
         error='Incorrect, please choose another value.'
     )
+    slider3 = RangeSlider(
+        display_text='Slider 3',
+        name='slider3',
+        min=0,
+        max=10,
+        initial=5,
+        step=1,
+        success='Excellent choice!'
+    )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'slider1': slider1,
         'slider2': slider2,
+        'slider3': slider3,
     }
     return render(request, 'gizmo_showcase/range_slider.html', context)
 
@@ -138,10 +151,10 @@ def select_input(request):
     """
     Controller for the Select Input page.
     """
-    # Select Input
+    # Select2 Input
     select_input2 = SelectInput(
         display_text='Select2',
-        name='select2',
+        name='select21',
         multiple=False,
         options=[('One', '1'), ('Two', '2'), ('Three', '3')],
         initial=['Three'],
@@ -151,21 +164,37 @@ def select_input(request):
 
     select_input2_multiple = SelectInput(
         display_text='Select2 Multiple',
-        name='select21',
+        name='select22',
         multiple=True,
         options=[('One', '1'), ('Two', '2'), ('Three', '3')],
         initial=['Two', 'One']
     )
 
-    select_input2_error = SelectInput(
+    select_input2_disabled = SelectInput(
         display_text='Select2 Disabled',
-        name='select22',
+        name='select23',
         multiple=False,
         options=[('One', '1'), ('Two', '2'), ('Three', '3')],
         disabled=True,
-        error='Here is my error text'
+    )
+    
+    select_input2_success = SelectInput(
+        display_text='Select2 with Success',
+        name='select24',
+        multiple=False,
+        options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+        success="Couldn't have chosen a better option."
+    )
+    
+    select_input2_error = SelectInput(
+        display_text='Select2 with Error',
+        name='select25',
+        multiple=False,
+        options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+        error="Oops, don't pick that one."
     )
 
+    # Select Classic
     select_input = SelectInput(
         display_text='Select',
         name='select1',
@@ -173,6 +202,16 @@ def select_input(request):
         original=True,
         options=[('One', '1'), ('Two', '2'), ('Three', '3')],
         initial=['Three']
+    )
+    
+    select_input_disabled = SelectInput(
+        display_text='Select Disabled',
+        name='select1',
+        multiple=False,
+        original=True,
+        options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+        initial=['1'],
+        disabled=True
     )
 
     select_input_multiple = SelectInput(
@@ -182,14 +221,39 @@ def select_input(request):
         original=True,
         options=[('One', '1'), ('Two', '2'), ('Three', '3')]
     )
+    
+    select_input_error = SelectInput(
+        display_text='Select with Error',
+        name='select1',
+        multiple=False,
+        original=True,
+        options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+        initial=['Two'],
+        error="That's an error, Jim."
+    )
+    
+    select_input_success = SelectInput(
+        display_text='Select with Success',
+        name='select1',
+        multiple=False,
+        original=True,
+        options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+        initial=['3'],
+        success="Great choice!"
+    )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'select_input2': select_input2,
+        'select_input2_disabled': select_input2_disabled,
         'select_input2_multiple': select_input2_multiple,
         'select_input2_error': select_input2_error,
+        'select_input2_success': select_input2_success,
         'select_input': select_input,
+        'select_input_disabled': select_input_disabled,
         'select_input_multiple': select_input_multiple,
+        'select_input_error': select_input_error,
+        'select_input_success': select_input_success,
     }
     return render(request, 'gizmo_showcase/select_input.html', context)
 
@@ -204,7 +268,8 @@ def text_input(request):
         display_text='Text',
         name='inputAmount',
         placeholder='e.g.: 10.00',
-        prepend='$'
+        prepend='$',
+        append='/unit'
     )
 
     text_error_input = TextInput(
@@ -212,14 +277,23 @@ def text_input(request):
         name='inputEmail',
         initial='bob@example.com',
         disabled=True,
-        icon_append='glyphicon glyphicon-envelope',
+        icon_append='envelope',
         error='Here is my error text'
+    )
+    
+    text_success_input = TextInput(
+        display_text='Text Error',
+        name='inputName',
+        initial='bob@example.com',
+        icon_prepend='person',
+        success='Good job!'
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'text_input': text_input,
         'text_error_input': text_error_input,
+        'text_success_input': text_success_input,
     }
     return render(request, 'gizmo_showcase/text_input.html', context)
 
@@ -245,9 +319,20 @@ def toggle_switch(request):
         initial=True,
         size='large'
     )
-
+    
     toggle_switch_disabled = ToggleSwitch(
         display_text='Disabled Toggle',
+        name='toggle2',
+        on_label='Yes',
+        off_label='No',
+        on_style='success',
+        off_style='danger',
+        initial=True,
+        disabled=True,
+    )
+
+    toggle_switch_error = ToggleSwitch(
+        display_text='Error Toggle',
         name='toggle3',
         on_label='On',
         off_label='Off',
@@ -255,8 +340,18 @@ def toggle_switch(request):
         off_style='warning',
         size='mini',
         initial=False,
-        disabled=True,
         error='Here is my error text'
+    )
+    
+    toggle_switch_success = ToggleSwitch(
+        display_text='Success Toggle',
+        name='toggle3',
+        on_label='On',
+        off_label='Off',
+        on_style='primary',
+        off_style='danger',
+        initial=True,
+        success='Here is my success text'
     )
 
     context = {
@@ -264,5 +359,7 @@ def toggle_switch(request):
         'toggle_switch': toggle_switch,
         'toggle_switch_styled': toggle_switch_styled,
         'toggle_switch_disabled': toggle_switch_disabled,
+        'toggle_switch_success': toggle_switch_success,
+        'toggle_switch_error': toggle_switch_error,
     }
     return render(request, 'gizmo_showcase/toggle_switch.html', context)

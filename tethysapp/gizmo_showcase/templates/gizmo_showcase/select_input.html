@@ -9,13 +9,18 @@
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/select_input.html">Select Input</a>.</p>
 <div class="demo">
     <h6 class="label">Select2 Input</h6>
-    {% gizmo select_input select_input2 %}
+    {% gizmo select_input2 %}
+    {% gizmo select_input2_disabled %}
+    {% gizmo select_input2_error %}
+    {% gizmo select_input2_success %}
     {% gizmo select_input2_multiple %}
-    {% gizmo select_input select_input2_error %}
 </div>
 <div class="demo">
-    <h6 class="label">Normal Select Input</h6>
+    <h6 class="label">Original/Classic Select Input</h6>
     {% gizmo select_input %}
+    {% gizmo select_input_disabled %}
+    {% gizmo select_input_error %}
+    {% gizmo select_input_success %}
     {% gizmo select_input_multiple %}
 </div>
 {% endblock %}
