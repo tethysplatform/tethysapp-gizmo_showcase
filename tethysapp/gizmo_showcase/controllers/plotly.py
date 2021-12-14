@@ -3,7 +3,6 @@ import pandas as pd
 from django.shortcuts import render
 from plotly import graph_objs as go
 from plotly import express as px
-from bokeh.plotting import figure as bokeh_figure
 from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import PlotlyView
 from .common import docs_endpoint

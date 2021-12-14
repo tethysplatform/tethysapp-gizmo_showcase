@@ -1,13 +1,7 @@
-import datetime as dt
-import numpy as np
-import pandas as pd
 from django.shortcuts import render
-from plotly import graph_objs as go
-from plotly import express as px
-from bokeh.plotting import figure as bokeh_figure
 from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import LinePlot, BarPlot, ScatterPlot, \
-    PiePlot, TimeSeries, PolarPlot, AreaRange, PlotlyView, BokehView
+    PiePlot, TimeSeries, PolarPlot, AreaRange
 from .common import docs_endpoint
 from .data import air_temperature, water_temperature, male_dataset, female_dataset, \
     winter_time_series_08, winter_time_series_09, temperature_averages, temperature_ranges, \
@@ -196,18 +190,3 @@ def plot_view_d3(request):
         'd3_time_series_plot_view': d3_time_series_plot_view,
     }
     return render(request, 'gizmo_showcase/plot_view_d3.html', context)
-
-
-@login_required()
-def bokeh_view(request):
-    """
-    Controller for the Bokeh View page.
-    """
-    plot = bokeh_figure(plot_height=300)
-    plot.circle([1, 2], [3, 4])
-    my_bokeh_view = BokehView(plot, height="300px")
-    context = {
-        'docs_endpoint': docs_endpoint,
-        'my_bokeh_view': my_bokeh_view,
-    }
-    return render(request, 'gizmo_showcase/bokeh_view.html', context)

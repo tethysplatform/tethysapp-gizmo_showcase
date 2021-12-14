@@ -1,11 +1,10 @@
 from math import pi
-import datetime as dt
 import numpy as np
 import pandas as pd
 from django.shortcuts import render
 from bokeh.layouts import column
 from bokeh.models import ColumnDataSource, RangeTool, HoverTool
-from bokeh.palettes import Bokeh, Category20c
+from bokeh.palettes import Category20c
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, dodge
 from bokeh.sampledata.penguins import data as penguin_data
