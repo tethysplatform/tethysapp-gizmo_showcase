@@ -1,13 +1,16 @@
 import datetime as dt
+import numpy as np
+import pandas as pd
 from django.shortcuts import render
 from plotly import graph_objs as go
+from plotly import express as px
 from bokeh.plotting import figure as bokeh_figure
 from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import LinePlot, BarPlot, ScatterPlot, \
     PiePlot, TimeSeries, PolarPlot, AreaRange, PlotlyView, BokehView
 from .common import docs_endpoint
 from .data import air_temperature, water_temperature, male_dataset, female_dataset, \
-    winter_timeseries_08, winter_timeseries_09, temperature_averages, temperature_ranges, \
+    winter_time_series_08, winter_time_series_09, temperature_averages, temperature_ranges, \
     parameter_names, park_city_parameters, maple_dell_parameters, browser_share_hc, \
     browser_share_d3, months, year_1800, year_1900, year_2000, year_2008
 
@@ -85,14 +88,14 @@ def plot_view_highcharts(request):
     )
 
     # Time series plot
-    timeseries_plot = TimeSeries(
+    time_series_plot = TimeSeries(
         width='500px',
         height='500px',
         engine='highcharts',
-        title='Irregular Timeseries Plot',
+        title='Irregular Time series Plot',
         y_axis_title='Snow depth',
         y_axis_units='m',
-        series=[winter_timeseries_08, winter_timeseries_09]
+        series=[winter_time_series_08, winter_time_series_09]
     )
 
     # Area Range plot
@@ -110,7 +113,7 @@ def plot_view_highcharts(request):
         'docs_endpoint': docs_endpoint,
         'line_plot_view': line_plot_view,
         'web_plot': web_plot,
-        'timeseries_plot': timeseries_plot,
+        'time_series_plot': time_series_plot,
         'pie_plot_view': pie_plot_view,
         'bar_plot_view': bar_plot_view,
         'area_range_plot': area_range_plot,
@@ -176,12 +179,12 @@ def plot_view_d3(request):
     )
 
     # Time series plot
-    d3_timeseries_plot_view = TimeSeries(
+    d3_time_series_plot_view = TimeSeries(
         width='100%',
-        title='Irregular Timeseries Plot',
+        title='Irregular Time series Plot',
         y_axis_title='Snow depth',
         y_axis_units='m',
-        series=[winter_timeseries_08, winter_timeseries_09]
+        series=[winter_time_series_08, winter_time_series_09]
     )
     
     context = {
@@ -190,26 +193,9 @@ def plot_view_d3(request):
         'd3_line_plot_view': d3_line_plot_view,
         'd3_scatter_plot_view': d3_scatter_plot_view,
         'd3_bar_plot_view': d3_bar_plot_view,
-        'd3_timeseries_plot_view': d3_timeseries_plot_view,
+        'd3_time_series_plot_view': d3_time_series_plot_view,
     }
     return render(request, 'gizmo_showcase/plot_view_d3.html', context)
-
-
-@login_required()
-def plotly_view(request):
-    """
-    Controller for the Plotly View page.
-    """
-    x = [dt.datetime(year=2013, month=10, day=4),
-         dt.datetime(year=2013, month=11, day=5),
-         dt.datetime(year=2013, month=12, day=6)]
-
-    my_plotly_view = PlotlyView([go.Scatter(x=x, y=[1, 3, 6])])
-    context = {
-        'docs_endpoint': docs_endpoint,
-        'my_plotly_view': my_plotly_view,
-    }
-    return render(request, 'gizmo_showcase/plotly_view.html', context)
 
 
 @login_required()

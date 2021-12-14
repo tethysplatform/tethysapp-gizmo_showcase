@@ -141,8 +141,8 @@ year_2008 = {
     'data': [973, 914, 500, 400, 349, 108, 372, 726, 638, 927, 621, 364]
 }
 
-# Timeseries Data
-winter_timeseries_08 = {
+# Time series Data
+winter_time_series_08 = {
     'name': 'Winter 2008-2009',
     'data': [
         [dt.datetime(2008, 12, 2), 0.8], [dt.datetime(2008, 12, 9), 0.6],
@@ -159,7 +159,7 @@ winter_timeseries_08 = {
     ]
 }
 
-winter_timeseries_09 = {
+winter_time_series_09 = {
     'name': 'Winter 2009-2010',
     'data': [
         [dt.datetime(2008, 12, 2), 1.8], [dt.datetime(2008, 12, 9), 1.6],

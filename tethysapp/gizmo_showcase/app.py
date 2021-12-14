@@ -82,12 +82,12 @@ class GizmoShowcase(TethysAppBase):
             UrlMap(
                 name='plotly_view',
                 url='gizmo-showcase/plotly-view',
-                controller='gizmo_showcase.controllers.plots.plotly_view'
+                controller='gizmo_showcase.controllers.plotly.plotly_view'
             ),
             UrlMap(
                 name='bokeh_view',
                 url='gizmo-showcase/bokeh-view',
-                controller='gizmo_showcase.controllers.plots.bokeh_view'
+                controller='gizmo_showcase.controllers.bokeh.bokeh_view'
             ),
             UrlMap(
                 name='map_view',
