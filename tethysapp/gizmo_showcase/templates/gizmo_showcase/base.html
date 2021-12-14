@@ -22,7 +22,8 @@
   {% url 'gizmo_showcase:toggle_switch' as toggle_switch_url %}
   {% url 'gizmo_showcase:table_view' as table_view_url %}
   {% url 'gizmo_showcase:datatable_view' as datatable_view_url %}
-  {% url 'gizmo_showcase:plot_view' as plot_view_url %}
+  {% url 'gizmo_showcase:plot_view_highcharts' as plot_view_hc_url %}
+  {% url 'gizmo_showcase:plot_view_d3' as plot_view_d3_url %}
   {% url 'gizmo_showcase:plotly_view' as plotly_view_url %}
   {% url 'gizmo_showcase:bokeh_view' as bokeh_view_url %}
   {% url 'gizmo_showcase:map_view' as map_view_url %}
@@ -43,7 +44,8 @@
   <li class="nav-item"><a class="nav-link{% if request.path == table_view_url %} active{% endif %}" href="{{ table_view_url }}">Table View</a></li>
   <li class="nav-item"><a class="nav-link{% if request.path == datatable_view_url %} active{% endif %}" href="{{ datatable_view_url }}">DataTable View</a></li>
   <li class="nav-item title">Plots</li>
-  <li class="nav-item"><a class="nav-link{% if request.path == plot_view_url %} active{% endif %}" href="{{ plot_view_url }}">Plot View</a></li>
+  <li class="nav-item"><a class="nav-link{% if request.path == plot_view_hc_url %} active{% endif %}" href="{{ plot_view_hc_url }}">Plot View - Highcharts</a></li>
+  <li class="nav-item"><a class="nav-link{% if request.path == plot_view_d3_url %} active{% endif %}" href="{{ plot_view_d3_url }}">Plot View - D3</a></li>
   <li class="nav-item"><a class="nav-link{% if request.path == plotly_view_url %} active{% endif %}" href="{{ plotly_view_url }}">Plotly View</a></li>
   <li class="nav-item"><a class="nav-link{% if request.path == bokeh_view_url %} active{% endif %}" href="{{ bokeh_view_url }}">Bokeh View</a></li>
   <li class="nav-item title">Maps</li>

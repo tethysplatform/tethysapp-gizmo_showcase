@@ -70,9 +70,14 @@ class GizmoShowcase(TethysAppBase):
                 controller='gizmo_showcase.controllers.tables.datatable_view'
             ),
             UrlMap(
-                name='plot_view',
-                url='gizmo-showcase/plot-view',
-                controller='gizmo_showcase.controllers.plots.plot_view'
+                name='plot_view_highcharts',
+                url='gizmo-showcase/plot-view-hc',
+                controller='gizmo_showcase.controllers.plots.plot_view_highcharts'
+            ),
+            UrlMap(
+                name='plot_view_d3',
+                url='gizmo-showcase/plot-view-d3',
+                controller='gizmo_showcase.controllers.plots.plot_view_d3'
             ),
             UrlMap(
                 name='plotly_view',
