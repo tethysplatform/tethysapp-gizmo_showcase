@@ -515,8 +515,6 @@ def cesium_map_view_draw(request):
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
-        'description': 
-            'This example demonstrates the drawing tools capability of Cesium globe, ' \
-            'which can be captured by wrapping the map in a form.',
+        'description': 'This example demonstrates the drawing tools capability of Cesium globe.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)

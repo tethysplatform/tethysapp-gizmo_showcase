@@ -52,15 +52,7 @@
   <div>{{ description|safe }}</div>
 </div>
 
-{% if cesium_map_view.draw %}
-<form action="" method="post">
-  {% csrf_token %}
-  {% gizmo cesium_map_view %}
-  <input type="submit" name="submit" class="btn btn-outline-secondary mt-3">
-</form>
-{% else %}
-  {% gizmo cesium_map_view %}
-{% endif %}
+{% gizmo cesium_map_view %}
 
 {% endblock %}
 
