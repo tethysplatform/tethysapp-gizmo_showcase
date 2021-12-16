@@ -6,6 +6,8 @@ from tethys_sdk.gizmos import CesiumMapView, MVLayer
 from .common import docs_endpoint
 from ..app import GizmoShowcase as app
 
+map_height = '600px'
+
 
 @login_required()
 def cesium_map_view_basic(request):
@@ -15,11 +17,15 @@ def cesium_map_view_basic(request):
     # Get the access token
     cesium_ion_token = app.get_custom_setting('cesium_ion_token')
 
-    cesium_map_view = CesiumMapView(cesium_ion_token=cesium_ion_token)
+    cesium_map_view = CesiumMapView(
+        cesium_ion_token=cesium_ion_token,
+        height=map_height,
+    )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 'This example shows a basic Cesium globe.'
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -57,22 +63,31 @@ def cesium_map_view_layers(request):
         },
     )
     
+    # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
+    # or viewBoundingSphere, to set the view
+    view = {
+        'setView': {
+            'destination': {
+                'Cesium.Rectangle.fromDegrees': [114.591, -45.837, 148.97, -5.73]
+            },
+        }
+    }
+
     cesium_map_view = CesiumMapView(
         cesium_ion_token=cesium_ion_token,
+        height=map_height,
         options={'shouldAnimate': False, 'timeline': False, 'homeButton': False},
         layers=[borehole_layer, us_states_layer],
-        view={
-            'setView': {
-                'destination': {
-                    'Cesium.Rectangle.fromDegrees': [114.591, -45.837, 148.97, -5.73]
-                },
-            }
-        }
+        view=view
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 
+            'This example displays an Esri basemap service and a WMS service on a Cesium globe. Compare with the ' \
+            '<a href="https://sandcastle.cesium.com/?src=Web%20Map%20Service%20(WMS).html" target="_blank">' \
+            'Web Map Service (WMS) example on Sandcastle</a>.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -85,37 +100,44 @@ def cesium_map_view_terrain(request):
     # Get the access token
     cesium_ion_token = app.get_custom_setting('cesium_ion_token')
 
-    cesium_map_view = CesiumMapView(
-        cesium_ion_token=cesium_ion_token,
-        options={'shouldAnimate': False, 'timeline': False, 'homeButton': False},
-        terrain={
-            'terrainProvider': {
-                'Cesium.createWorldTerrain': {
-                    'requestVertexNormals': True,
-                    'requestWaterMask': True
-                }
-            }
-        },
-        view={
-            'flyTo': {
-                'destination': {
-                    'Cesium.Cartesian3.fromDegrees': [-122.19, 46.25, 5000.0]
+    # Define a terrain provider using the Python equivalent of the CesiumJS API
+    terrain_provider = {
+        'Cesium.createWorldTerrain': {
+            'requestVertexNormals': True,
+            'requestWaterMask': True
+        }
+    }
+
+    # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
+    # or viewBoundingSphere, to set the view
+    view = {
+        'flyTo': {
+            'destination': {
+                'Cesium.Cartesian3.fromDegrees': [-122.19, 46.25, 5000.0]
+            },
+            'orientation': {
+                'direction': {
+                    'Cesium.Cartesian3': [-0.04231243104240401, -0.20123236049443421, -0.97862924300734]
                 },
-                'orientation': {
-                    'direction': {
-                        'Cesium.Cartesian3': [-0.04231243104240401, -0.20123236049443421, -0.97862924300734]
-                    },
-                    'up': {
-                        'Cesium.Cartesian3': [-0.47934589305293746, -0.8553216253114552, 0.1966022179118339]
-                    }
+                'up': {
+                    'Cesium.Cartesian3': [-0.47934589305293746, -0.8553216253114552, 0.1966022179118339]
                 }
             }
         }
+    }
+
+    cesium_map_view = CesiumMapView(
+        cesium_ion_token=cesium_ion_token,
+        height=map_height,
+        options={'shouldAnimate': False, 'timeline': False, 'homeButton': False},
+        terrain={'terrainProvider': terrain_provider},
+        view=view
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 'This example demonstrates the 3D-tiled terrain feature of Cesium globe.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -210,37 +232,42 @@ def cesium_map_view_czml(request):
         }
     ]
 
-    cesium_map_view = CesiumMapView(
-        cesium_ion_token=cesium_ion_token,
-        options={'shouldAnimate': True,
-                    'timeline': False,
-                    'homeButton': False,
-                    'shadows': True,
-                    },
-        view={'lookAt': {
+    czml_layer = {
+        'source': 'czml',
+        'options': czml_doc
+    }
+    
+    # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
+    # or viewBoundingSphere, to set the view
+    view = {
+        'lookAt': {
             'center': {'Cesium.Cartesian3.fromDegrees': [-98.0, 40.0]},
             'offset': {'Cesium.Cartesian3': [0.0, -4790000.0, 3930000.0]},
-        }},
-        layers={'BingMap': {
-            'imageryProvider': {
-                'Cesium.BingMapsImageryProvider': {
-                    'url': 'https://dev.virtualearth.net',
-                    'key': 'AnYTMwSuR3-CBMzhN0yAYrtl-28rEFe7Kxfg2IWC9csUBCn0nYDFXW1ioNakjX3W',
-                    'mapStyle': 'Cesium.BingMapsStyle.AERIAL',
-                },
-            }
-        }},
-        entities=[
-            {
-                'source': 'czml',
-                'options': czml_doc
-            }
-        ],
+        }
+    }
+
+    cesium_map_view = CesiumMapView(
+        cesium_ion_token=cesium_ion_token,
+        height=map_height,
+        options={
+            'shouldAnimate': True,
+            'timeline': False,
+            'homeButton': False,
+            'shadows': True,
+        },
+        view=view,
+        entities=[czml_layer],
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 
+            'This example displays multiple ' \
+            '<a href="https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/CZML-Guide" target="_blank">' \
+            'CZML documents</a> on a Cesium globe. Compare with the ' \
+            '<a href="https://sandcastle.cesium.com/?src=CZML%20Polygon.html" target="_blank">' \
+            'CZML Polygon example on Sandcastle</a>.'
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -288,36 +315,39 @@ def cesium_map_view_geojson(request):
         ]
     }
 
+    geojson_layer = {
+        'source': 'geojson',
+        'options': geojson_object
+    }
+    
+    # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
+    # or viewBoundingSphere, to set the view
+    view = {
+        'flyTo': {
+            'destination': {
+                'Cesium.Cartesian3.fromDegrees': [0, 0, 20000000.0]
+            },
+        }
+    }
+
     cesium_map_view = CesiumMapView(
         cesium_ion_token=cesium_ion_token,
+        height=map_height,
         options={'shouldAnimate': True,
                     'timeline': False,
                     'homeButton': False,
                     'shadows': True,
                     },
-        view={'flyTo': {
-            'destination': {'Cesium.Cartesian3.fromDegrees': [0, 0, 20000000.0]},
-        }},
-        layers={'BingMap': {
-            'imageryProvider': {
-                'Cesium.BingMapsImageryProvider': {
-                    'url': 'https://dev.virtualearth.net',
-                    'key': 'AnYTMwSuR3-CBMzhN0yAYrtl-28rEFe7Kxfg2IWC9csUBCn0nYDFXW1ioNakjX3W',
-                    'mapStyle': 'Cesium.BingMapsStyle.AERIAL',
-                },
-            }
-        }},
+        view=view,
         entities=[
-            {
-                'source': 'geojson',
-                'options': geojson_object
-            }
+            geojson_layer
         ],
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 'This example shows GeoJSON data being rendered on a Cesium globe.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -329,53 +359,53 @@ def cesium_map_view_model(request):
     """
     # Get the access token
     cesium_ion_token = app.get_custom_setting('cesium_ion_token')
-
-    object1 = '/static/gizmo_showcase/data/cesium_models/CesiumAir/Cesium_Air.glb'
-    cesium_map_view = CesiumMapView(
-        cesium_ion_token=cesium_ion_token,
+    
+    # Pythonized version of the CesiumJS API
+    aircraft_model = {
+        'Cesium_Airplane': {
+            'model': {
+                'uri': '/static/gizmo_showcase/data/cesium_models/CesiumAir/Cesium_Air.glb',
+                'show': True,
+                'minimumPixelSize': 128,
+                'maximumScale': 20000,
+                'shadows': 'enabled',
+            },
+            'name': 'Cesium Airplane',
+            'orientation': {
+                'Cesium.Transforms.headingPitchRollQuaternion': [
+                    {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
+                    {'Cesium.HeadingPitchRoll': [{'Cesium.Math.toRadians': 135}, 0, 0]}]},
+            'position': {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
+            'tracked': True,  # Force camera to track this model object (only one object can be tracked at a time)
+        }
+    }
+    
+    # Alternative method using MVLayer
+    balloon_model = MVLayer(
+        source='CesiumModel',
+        legend_title='Cesium Ballon',
         options={
-            'shouldAnimate': True,
-            'timeline': True,
-            'homeButton': True,
-            'shadows': True,
+            'name': 'Cesium_Ballon',
+            'model': {
+                'uri': '/static/gizmo_showcase/data/cesium_models/CesiumBalloon/CesiumBalloon.glb',
+                'show': True,
+                'minimumPixelSize': 128,
+                'maximumScale': 20000,
+                'shadows': 'enabled'
+            },
+            'orientation': {
+                'Cesium.Transforms.headingPitchRollQuaternion':[
+                    {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
+                    {'Cesium.HeadingPitchRoll': [{'Cesium.Math.toRadians': 135}, 0, 0]}
+                ]
+            },
+            'position': {'Cesium.Cartesian3.fromDegrees': [-123.0748, 44.0507, 4950]}
         },
-        primitives=[
-            MVLayer(
-                source='CesiumPrimitive',
-                legend_title='Cesium 3D Buildings',
-                options={'Cesium.Cesium3DTileset': {'url': {'Cesium.IonResource.fromAssetId': 96188}}},
-                data={'layer_name': 'Cesium_Buildings', 'layer_variable': 'variable', 'layer_id': 1}
-            )
-        ],
-        layers={'BingMap': {'imageryProvider': {
-            'Cesium.BingMapsImageryProvider': [{
-                'url': 'https://dev.virtualearth.net',
-                'key': 'AnYTMwSuR3-CBMzhN0yAYrtl-28rEFe7Kxfg2IWC9csUBCn0nYDFXW1ioNakjX3W',
-                'mapStyle': 'Aerial',
-            }],
-        }}},
-        models=[
-            MVLayer(
-                source='CesiumModel',
-                legend_title='Cesium Model',
-                options={'model': {'uri': object1,
-                                    'show': True,
-                                    'minimumPixelSize': 128,
-                                    'maximumScale': 20000,
-                                    'shadows': 'enabled'},
-                            'name': 'Cesium_Airplane',
-                            'orientation': {
-                                'Cesium.Transforms.headingPitchRollQuaternion':
-                                    [{'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
-                                    {'Cesium.HeadingPitchRoll': [{'Cesium.Math.toRadians': 135}, 0, 0]}]},
-                            'position': {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]}
-                            },
-                data={'layer_id': "cesium_airplane_id",
-                        'layer_name': "Cesium_Airplane",
-                        'popup_title': "Cesium Airplane"}
-            )
-        ],
-        clock={'clock': {'Cesium.Clock': {
+    )
+    
+    # Use the clock argument to define starting time, time step, stop time, etc.
+    clock = {
+        'Cesium.Clock': {
             'startTime': {'Cesium.JulianDate.fromIso8601': ['2017-07-11T00:00:00Z']},
             'stopTime': {'Cesium.JulianDate.fromIso8601': ['2017-07-11T24:00:00Z']},
             'currentTime': {'Cesium.JulianDate.fromIso8601': ['2017-07-11T10:00:00Z']},
@@ -383,85 +413,87 @@ def cesium_map_view_model(request):
             'clockStep': 'Cesium.ClockStep.SYSTEM_CLOCK_MULTIPLIER',
             'multiplier': 1000,
             'shouldAnimate': True
-        }}}
+        }
+    }
+
+    cesium_map_view = CesiumMapView(
+        cesium_ion_token=cesium_ion_token,
+        height=map_height,
+        options={
+            'shouldAnimate': True,
+            'timeline': True,
+            'homeButton': True,
+            'shadows': True,
+        },
+        models=[aircraft_model, balloon_model],
+        clock={'clock': clock}
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 
+            'This example loads 3D models on a Cesium globe from a GLB file. ' \
+            'Compare with the <a href="https://sandcastle.cesium.com/?src=3D%20Models.html" target="_blank">' \
+            '3D Models example on Sandcastle</a>.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
 @login_required()
-def cesium_map_view_multi_model(request):
+def cesium_map_view_ion(request):
     """
     Controller for the Cesium Map View page.
     """
     # Get the access token
     cesium_ion_token = app.get_custom_setting('cesium_ion_token')
+    
+    # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
+    # or viewBoundingSphere, to set the view
+    view = {
+        'setView': {
+            'destination': {
+                'Cesium.Cartesian3.fromDegrees': [
+                    -74.01881302800248, 40.69114333714821, 600
+                ]
+            },
+            'orientation': {
+                'Cesium.HeadingPitchRoll.fromDegrees': [
+                    21.27879878293835, -12.34390550872461, 0.0716951918898415
+                ]
+            },
+            'endTransform': 'Cesium.Matrix4.IDENTITY'
+        }
+    }
 
-    object1 = '/static/gizmo_showcase/data/cesium_models/CesiumAir/Cesium_Air.glb'
-    object2 = '/static/gizmo_showcase/data/cesium_models/CesiumBalloon/CesiumBalloon.glb'
+    # Use the CesiumIon resource to load the Cesium OSM Buildings 
+    osm_buildings = {
+        'Cesium_OSM_Buildings': {
+            'Cesium.Cesium3DTileset': {
+                'url': {'Cesium.IonResource.fromAssetId': 96188},
+            }
+        }
+    }
+
     cesium_map_view = CesiumMapView(
         cesium_ion_token=cesium_ion_token,
-        options={'shouldAnimate': True,
-                    'timeline': True,
-                    'homeButton': True,
-                    'shadows': True,
-                    },
-        layers={'BingMap': {
-            'imageryProvider': {'Cesium.BingMapsImageryProvider': [{
-                'url': 'https://dev.virtualearth.net',
-                'key': 'AnYTMwSuR3-CBMzhN0yAYrtl-28rEFe7Kxfg2IWC9csUBCn0nYDFXW1ioNakjX3W',
-                'mapStyle': 'Aerial',
-            }]}
-        }},
-        primitives=[
-            {'Cesium_OSM_Buildings': {'Cesium.Cesium3DTileset': {'url': {'Cesium.IonResource.fromAssetId': 96188}}}}
-        ],
-        models=[
-            {'Cesium_Airplane': {
-                'model': {
-                    'uri': object1,
-                    'show': True,
-                    'minimumPixelSize': 128,
-                    'maximumScale': 20000,
-                    'shadows': 'enabled',
-                },
-                'name': 'Cesium Airplane',
-                'orientation': {
-                    'Cesium.Transforms.headingPitchRollQuaternion': [
-                        {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
-                        {'Cesium.HeadingPitchRoll': [{'Cesium.Math.toRadians': 135}, 0, 0]}]},
-                'position': {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
-            }},
-            MVLayer(
-                source='CesiumModel',
-                legend_title='Cesium Ballon',
-                options={'model': {
-                    'uri': object2,
-                    'show': True,
-                    'minimumPixelSize': 128,
-                    'maximumScale': 20000,
-                    'shadows': 'enabled'},
-                    'name': 'Cesium_Ballon',
-                    'orientation': {
-                        'Cesium.Transforms.headingPitchRollQuaternion':
-                            [{'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]},
-                                {'Cesium.HeadingPitchRoll': [{'Cesium.Math.toRadians': 135}, 0, 0]}]},
-                    'position': {'Cesium.Cartesian3.fromDegrees': [-123.0744619, 44.0503706, 5000]}
-                    },
-                data={'layer_id': "cesium_ballon_id",
-                        'layer_name': "Cesium_Ballon",
-                        'popup_title': "Cesium Ballon"}
-            ),
-        ],
+        height=map_height,
+        options={
+            'shouldAnimate': True,
+            'timeline': False,
+            'homeButton': True,
+            'shadows': True,
+        },
+        primitives=[osm_buildings],
+        view=view
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 
+            'This example illustrates how to load CesiumIon resources such as the ' \
+            'Open Street Map 3D buildings layer displayed below. ',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -476,12 +508,15 @@ def cesium_map_view_draw(request):
 
     cesium_map_view = CesiumMapView(
         cesium_ion_token=cesium_ion_token,
-        draw=True,
-        height='600px'
+        height=map_height,
+        draw=True,  # Turn on drawing tools
     )
 
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
+        'description': 
+            'This example demonstrates the drawing tools capability of Cesium globe, ' \
+            'which can be captured by wrapping the map in a form.',
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)

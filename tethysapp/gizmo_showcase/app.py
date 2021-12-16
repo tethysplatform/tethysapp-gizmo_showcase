@@ -145,9 +145,9 @@ class GizmoShowcase(TethysAppBase):
                 controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_model'
             ),
             UrlMap(
-                name='cesium_map_view_multi_model',
-                url='gizmo-showcase/cesium-map-view-multi-model',
-                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_multi_model'
+                name='cesium_map_view_ion',
+                url='gizmo-showcase/cesium-map-view-ion',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_ion'
             ),
             UrlMap(
                 name='cesium_map_view_draw',
