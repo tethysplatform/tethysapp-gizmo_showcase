@@ -1,4 +1,5 @@
 from tethys_sdk.base import TethysAppBase, url_map_maker
+from tethys_sdk.app_settings import CustomSetting
 
 
 class GizmoShowcase(TethysAppBase):
@@ -16,6 +17,20 @@ class GizmoShowcase(TethysAppBase):
     tags = ''
     enable_feedback = False
     feedback_emails = []
+    
+    def custom_settings(self):
+        """
+        Define custom settings for the app.
+        """
+        custom_settings = (
+            CustomSetting(
+                name='cesium_ion_token',
+                type=CustomSetting.TYPE_STRING,
+                description='CesiumIon Token for the CesiumMapView examples.',
+                required=True,
+            ),
+        )
+        return custom_settings
 
     def url_maps(self):
         """
@@ -100,9 +115,44 @@ class GizmoShowcase(TethysAppBase):
                 controller='gizmo_showcase.controllers.esri_map_view.esri_map_view'
             ),
             UrlMap(
-                name='cesium_map_view',
+                name='cesium_map_view_basic',
                 url='gizmo-showcase/cesium-map-view',
-                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view'
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_basic'
+            ),
+            UrlMap(
+                name='cesium_map_view_layers',
+                url='gizmo-showcase/cesium-map-view-layers',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_layers'
+            ),
+            UrlMap(
+                name='cesium_map_view_terrain',
+                url='gizmo-showcase/cesium-map-view-terrain',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_terrain'
+            ),
+            UrlMap(
+                name='cesium_map_view_czml',
+                url='gizmo-showcase/cesium-map-view-czml',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_czml'
+            ),
+            UrlMap(
+                name='cesium_map_view_geojson',
+                url='gizmo-showcase/cesium-map-view-geojson',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_geojson'
+            ),
+            UrlMap(
+                name='cesium_map_view_model',
+                url='gizmo-showcase/cesium-map-view-model',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_model'
+            ),
+            UrlMap(
+                name='cesium_map_view_multi_model',
+                url='gizmo-showcase/cesium-map-view-multi-model',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_multi_model'
+            ),
+            UrlMap(
+                name='cesium_map_view_draw',
+                url='gizmo-showcase/cesium-map-view-multi-draw',
+                controller='gizmo_showcase.controllers.cesium_map_view.cesium_map_view_draw'
             ),
             UrlMap(
                 name='jobs_table',
