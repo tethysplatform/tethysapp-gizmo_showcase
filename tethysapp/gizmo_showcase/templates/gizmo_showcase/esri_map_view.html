@@ -5,15 +5,10 @@
 
 {% block app_content %}
 {{ block.super }}
-<h2>ESRI Map View</h2>
-<p>The ESRI Map gizmo can be used to visualize ESRI ArcGIS web maps and layers. ESRI Map is powered by <a href="https://developers.arcgis.com/javascript/" target="_blank">ArcGIS API for Javascript</a>.</p>
-<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/esri_map.html">ESRI Map</a>.</p>
+<h2>Esri Map View</h2>
+<p>The Esri Map gizmo can be used to visualize Esri ArcGIS web maps and layers. Esri Map is powered by <a href="https://developers.arcgis.com/javascript/" target="_blank">ArcGIS API for Javascript</a>.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/esri_map.html">Esri Map</a>.</p>
 {% gizmo esri_map esri_map %}
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-{% endblock %}
-
-{% block github_link %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/esri_map_view.py{% endblock %}

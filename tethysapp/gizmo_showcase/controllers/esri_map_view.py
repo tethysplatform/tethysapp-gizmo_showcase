@@ -9,10 +9,16 @@ def esri_map_view(request):
     """
     Controller for the Esri Map View page.
     """
-    esri_map_view = EMView(center=[-100, 40], zoom=4)
+    # Set initial view
+    esri_map_view = EMView(
+        center=[-100, 40], 
+        zoom=4
+    )
+    
+    # Define layers
     esri_layer = EMLayer(
         type='FeatureLayer',
-        url='http://geoserver.byu.edu/arcgis/rest/services/gaugeviewer/AHPS_gauges/MapServer/0'
+        url='https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_States_Generalized/FeatureServer'
     )
 
     vector_tile = EMLayer(
@@ -20,8 +26,13 @@ def esri_map_view(request):
         url='https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer'
     )
 
-    esri_map = ESRIMap(height='400px', width='100%', basemap='topo',
-                       view=esri_map_view, layers=[vector_tile, esri_layer])
+    esri_map = ESRIMap(
+        height='700px', 
+        width='100%', 
+        basemap='topo',
+        view=esri_map_view, 
+        layers=[vector_tile, esri_layer]
+    )
 
     context = {
         'docs_endpoint': docs_endpoint,
