@@ -4,6 +4,7 @@
 {% block title %}{{ block.super }} - Bokeh Plot View{% endblock %}
 
 {% block app_content %}
+{{ block.super }}
 <h2>Bokeh View</h2>
 <p>Bokeh views can be used to create charts using the Bokeh Python library. For more information about Bokeh, see the <a target="_blank" href="http://bokeh.pydata.org"> Bokeh website</a></p>
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/bokeh_view.html">Bokeh View</a>.</p>
@@ -33,9 +34,4 @@
 </div>
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-{% endblock %}
-
-{% block app_actions %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/bokeh.py{% endblock %}

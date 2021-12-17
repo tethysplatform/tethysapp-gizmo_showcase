@@ -4,6 +4,7 @@
 {% block title %}{{ block.super }} - Toggle Switch{% endblock %}
 
 {% block app_content %}
+{{ block.super }}
 <h2>Toggle Switch</h2>
 <p>Toggle switches can be used as an alternative to check boxes for boolean or binomial input. Toggle switches are implemented using the excellent <a href="https://bttstrp.github.io/bootstrap-switch/examples.html" target="_blank">Bootstrap Switch</a> project.</p>
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/toggle_switch.html">Toggle Switch</a>.</p>
@@ -31,9 +32,4 @@
 </div>
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-{% endblock %}
-
-{% block app_actions %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/form_controls.py#L302{% endblock %}

@@ -4,6 +4,7 @@
 {% block title %}{{ block.super }} - Text Input{% endblock %}
 
 {% block app_content %}
+{{ block.super }}
 <h2>Text Input</h2>
 <p>The text input gizmo makes it easy to add text inputs to your app that are styled using <a href="https://getbootstrap.com/docs/5.1/forms/input-group/">Bootstrap</a>. You can also use any of the <a href="https://icons.getbootstrap.com">Bootstrap Icons</a>.</p>
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/text_input.html">Text Input</a>.</p>
@@ -21,9 +22,4 @@
 </div>
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-{% endblock %}
-
-{% block app_actions %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/form_controls.py#L262{% endblock %}

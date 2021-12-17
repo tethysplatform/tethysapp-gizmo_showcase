@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block app_content %}
+{{ block.super }}
 <h2>Cesium Map View</h2>
 <p>The CesiumMapView gizmo can be used to leverage the power of CesiumJs, a 3D-globe mapping client. Cesium is powered by <a href="https://cesium.com/platform/cesiumjs/" target="_blank">Cesium API for Javascript</a>.</p>
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/cesium_map_view.html">Cesium Map</a>.</p>
@@ -56,9 +57,4 @@
 
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-{% endblock %}
-
-{% block app_actions %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/cesium_map_view.py{% endblock %}

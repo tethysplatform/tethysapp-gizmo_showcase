@@ -4,6 +4,7 @@
 {% block title %}{{ block.super }} - Message Box{% endblock %}
 
 {% block app_content %}
+{{ block.super }}
 <h2>Message Box</h2>
 <p>Message box gizmos can be used to display messages to users. These are especially useful for alerts and warning messages. The message box gizmo is implemented using Twitter Bootstrap's modal.</p>
 <p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/message_box.html">Message Box</a>.</p>
@@ -21,5 +22,4 @@
     {% gizmo message_box %}
 {% endblock %}
 
-{% block app_actions %}
-{% endblock %}
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/other.py{% endblock %}
