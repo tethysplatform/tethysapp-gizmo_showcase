@@ -39,7 +39,7 @@ def jobs_table(request):
 
 def jobs_table_results(request, job_id):
     """Controller for the Jobs Table demo results links."""
-    return redirect(reverse('gizmos:jobs_table'))
+    return redirect(reverse('gizmo_showcase:jobs_table'))
 
 
 def create_sample_jobs(request):
@@ -72,4 +72,4 @@ def create_sample_jobs(request):
     create_job('21', 'Completed multi-process job with some errors', 'VCP')
     create_job('22', 'Workflow job with multiple nodes.', 'VAR', workflow=True)
 
-    return redirect(reverse('gizmos:jobs_table') + '#jobs_table_docs')
+    return redirect(reverse('gizmo_showcase:jobs_table'))
