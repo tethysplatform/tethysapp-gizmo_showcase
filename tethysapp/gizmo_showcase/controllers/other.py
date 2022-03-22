@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from tethys_sdk.routing import controller
-from tethys_sdk.gizmos import MessageBox
+from tethys_sdk.gizmos import MessageBox, SlideSheet
 from .common import docs_endpoint
 
 
@@ -25,3 +25,21 @@ def message_box(request):
         'message_box': message_box,
     }
     return render(request, 'gizmo_showcase/message_box.html', context)
+
+
+@controller
+def slide_sheet(request):
+    """
+    Controller for the Slide Sheet page.
+    """
+    slide_sheet = SlideSheet(
+        id='plot-slide-sheet',
+        title='Plot Slide Sheet',
+        content_template='gizmo_showcase/slide_sheet_content.html'
+    )
+
+    context = {
+        'docs_endpoint': docs_endpoint,
+        'slide_sheet': slide_sheet,
+    }
+    return render(request, 'gizmo_showcase/slide_sheet.html', context)

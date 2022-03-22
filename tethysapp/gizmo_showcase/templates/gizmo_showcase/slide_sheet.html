@@ -1,0 +1,30 @@
+{% extends "gizmo_showcase/base.html" %}
+{% load tethys_gizmos static %}
+
+{% block title %}{{ block.super }} - Slide Sheet{% endblock %}
+
+{% block import_gizmos %}
+  {# Load Plotly JS Library via Gizmo #}
+  {% import_gizmo_dependency plotly_view %}
+{% endblock %}
+
+{% block app_content %}
+{{ block.super }}
+<h2>Slide Sheet</h2>
+<p>Message box gizmos can be used to display messages to users. These are especially useful for alerts and warning messages. The message box gizmo is implemented using Twitter Bootstrap's modal.</p>
+<p>For example code and an explanation of options see Gizmo Options Object API for <a target="_blank" href="{{ docs_endpoint }}/tethys_sdk/gizmos/message_box.html">Message Box</a>.</p>
+
+<div class="example">
+    <div class="demo">
+        <button class="btn btn-success" onclick="SLIDE_SHEET.open('{{ slide_sheet.id }}');">Show Slide Sheet</button>       
+    </div>
+</div>
+{% gizmo slide_sheet %}
+{% endblock %}
+
+{% block github_link %}https://github.com/tethysplatform/tethysapp-gizmo_showcase/blob/main/tethysapp/gizmo_showcase/controllers/other.py{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'gizmo_showcase/js/plot_slide_sheet.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -31,6 +31,7 @@
   {% url 'gizmo_showcase:esri_map_view' as esri_map_view_url %}
   {% url 'gizmo_showcase:jobs_table' as jobs_table_url %}
   {% url 'gizmo_showcase:message_box' as message_box_url %}
+  {% url 'gizmo_showcase:slide_sheet' as slide_sheet_url %}
   <li class="nav-item title">Navigation</li>
   <li class="nav-item"><a class="nav-link{% if request.path == home_url %} active{% endif %}" href="{{ home_url }}">Quick Start</a></li>
   <li class="nav-item title">Form Controls</li>
@@ -56,6 +57,7 @@
   <li class="nav-item"><a class="nav-link{% if request.path == jobs_table_url %} active{% endif %}" href="{{ jobs_table_url }}">Jobs Table</a></li>
   <li class="nav-item title">Other</li>
   <li class="nav-item"><a class="nav-link{% if request.path == message_box_url %} active{% endif %}" href="{{ message_box_url }}">Message Box</a></li>
+  <li class="nav-item"><a class="nav-link{% if request.path == slide_sheet_url %} active{% endif %}" href="{{ slide_sheet_url }}">Slide Sheet</a></li>
 
 {% endblock %}
 
