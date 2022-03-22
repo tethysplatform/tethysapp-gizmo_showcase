@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import ESRIMap, EMLayer, EMView
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def esri_map_view(request):
     """
     Controller for the Esri Map View page.

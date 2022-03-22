@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import LinePlot, BarPlot, ScatterPlot, \
     PiePlot, TimeSeries, PolarPlot, AreaRange
 from .common import docs_endpoint
@@ -9,7 +9,9 @@ from .data import air_temperature, water_temperature, male_dataset, female_datas
     browser_share_d3, months, year_1800, year_1900, year_2000, year_2008
 
 
-@login_required()
+@controller(
+    url='gizmo-showcase/plot-view-hc'
+)
 def plot_view_highcharts(request):
     """
     Controller for the Plot View page.
@@ -116,7 +118,9 @@ def plot_view_highcharts(request):
     return render(request, 'gizmo_showcase/plot_view_hc.html', context)
 
 
-@login_required()
+@controller(
+    url='gizmo-showcase/plot-view-d3'
+)
 def plot_view_d3(request):
     """
     Controller for the Plot View page.

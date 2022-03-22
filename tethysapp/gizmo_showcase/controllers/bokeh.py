@@ -10,12 +10,12 @@ from bokeh.transform import cumsum, dodge
 from bokeh.sampledata.penguins import data as penguin_data
 from bokeh.sampledata.stocks import AAPL
 from bokeh.transform import factor_cmap, factor_mark
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import BokehView
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def bokeh_view(request):
     """
     Controller for the Bokeh View page.

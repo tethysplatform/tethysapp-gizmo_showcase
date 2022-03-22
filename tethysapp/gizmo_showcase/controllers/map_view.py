@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render
 from django.contrib import messages
 import geojson
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import MapView, MVView, MVDraw, MVLayer, MVLegendClass
 from .common import docs_endpoint
 
@@ -15,7 +15,7 @@ def get_geoserver_wms():
     return 'https://demo.geo-solutions.it/geoserver/wms'
 
 
-@login_required()
+@controller
 def map_view(request):
     """
     Controller for the Map View page.

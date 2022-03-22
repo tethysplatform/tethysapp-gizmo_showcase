@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import Button
 
 
-@login_required()
+@controller
 def home(request):
     """
     Controller for the Quick Start (home) page.

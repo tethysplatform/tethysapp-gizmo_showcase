@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import CesiumMapView, MVLayer
 from .common import docs_endpoint
 from ..app import GizmoShowcase as app
@@ -9,7 +9,9 @@ from ..app import GizmoShowcase as app
 map_height = '600px'
 
 
-@login_required()
+@controller(
+    url='gizmo-showcase/cesium-map-view'
+)
 def cesium_map_view_basic(request):
     """
     Controller for the Cesium Map View page.
@@ -30,7 +32,7 @@ def cesium_map_view_basic(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_layers(request):
     """
     Controller for the Cesium Map View page.
@@ -92,7 +94,7 @@ def cesium_map_view_layers(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_terrain(request):
     """
     Controller for the Cesium Map View page.
@@ -142,7 +144,7 @@ def cesium_map_view_terrain(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_czml(request):
     """
     Controller for the Cesium Map View page.
@@ -272,7 +274,7 @@ def cesium_map_view_czml(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_geojson(request):
     """
     Controller for the Cesium Map View page.
@@ -352,7 +354,7 @@ def cesium_map_view_geojson(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_model(request):
     """
     Controller for the Cesium Map View page.
@@ -440,7 +442,7 @@ def cesium_map_view_model(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_ion(request):
     """
     Controller for the Cesium Map View page.
@@ -498,7 +500,7 @@ def cesium_map_view_ion(request):
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
 
-@login_required()
+@controller
 def cesium_map_view_draw(request):
     """
     Controller for the Cesium Map View page.

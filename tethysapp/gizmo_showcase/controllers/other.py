@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
+from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import MessageBox
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def message_box(request):
     """
     Controller for the Message Box page.
