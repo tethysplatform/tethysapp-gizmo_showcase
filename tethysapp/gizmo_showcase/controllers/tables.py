@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import TableView, DataTableView
+from tethys_sdk.base import controller
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def table_view(request):
     """
     Controller for the Table View page.
@@ -54,7 +54,7 @@ def table_view(request):
     return render(request, 'gizmo_showcase/table_view.html', context)
 
 
-@login_required()
+@controller
 def datatable_view(request):
     """
     Controller for the DataTable View page.

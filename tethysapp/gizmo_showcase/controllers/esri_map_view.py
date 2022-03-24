@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import ESRIMap, EMLayer, EMView
+from tethys_sdk.base import controller
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def esri_map_view(request):
     """
     Controller for the Esri Map View page.
@@ -29,7 +29,7 @@ def esri_map_view(request):
     esri_map = ESRIMap(
         height='700px', 
         width='100%', 
-        basemap='topo',
+        basemap='topo-vector',
         view=esri_map_view, 
         layers=[vector_tile, esri_layer]
     )

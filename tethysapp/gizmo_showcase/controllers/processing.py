@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from tethys_sdk.permissions import login_required
 from tethys_sdk.gizmos import JobsTable
+from tethys_sdk.base import controller
 from .common import docs_endpoint
 
 
-@login_required()
+@controller
 def jobs_table(request):
     """
     Controller for the Jobs Table page.
@@ -37,14 +37,17 @@ def jobs_table(request):
     return render(request, 'gizmo_showcase/jobs_table.html', context)
 
 
+@controller(login_required=False)
 def jobs_table_results(request, job_id):
     """Controller for the Jobs Table demo results links."""
     return redirect(reverse('gizmo_showcase:jobs_table'))
 
 
+@controller(name='jobs_table_sample_jobs', login_required=False)
 def create_sample_jobs(request):
     """Controller that creates sample Jobs for the Jobs Table demo."""
     from tethys_compute.models import BasicJob, CondorWorkflow
+
     def create_job(job_id, description, status, status_msg=None, workflow=False):
         Job = CondorWorkflow if workflow else BasicJob
         job = Job(
