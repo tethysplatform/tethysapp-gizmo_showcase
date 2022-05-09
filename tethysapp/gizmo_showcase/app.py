@@ -9,7 +9,7 @@ class GizmoShowcase(TethysAppBase):
 
     name = 'Gizmo Showcase'
     index = 'home'
-    icon = 'gizmo_showcase/images/icon.gif'
+    icon = 'gizmo_showcase/images/gizmos.png'
     package = 'gizmo_showcase'
     root_url = 'gizmo-showcase'
     color = '#2c3e50'
