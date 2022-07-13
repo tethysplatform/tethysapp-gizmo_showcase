@@ -1,3 +1,4 @@
+from time import sleep
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from tethys_sdk.routing import controller
@@ -24,10 +25,20 @@ def jobs_table(request):
         monitor_url='gizmo_showcase:jobs_table_results',
         results_url='gizmo_showcase:jobs_table_results',
         refresh_interval=10000,
-        run_btn=True,
-        delete_btn=True,
         show_detailed_status=True,
-        actions=['run', 'resubmit', 'log', 'monitor', 'results', 'terminate', 'delete'],
+        delay_loading_status=True,
+        actions=[
+            'run', 'resubmit', 'log', 'monitor', 'results', 'terminate', 'delete', 'pause', 'resume',
+            ('Custom Action', custom_action, lambda self: self.id % 2 == 0,
+             'Custom actions run user-defined custom code. '
+             'This custom action will sleep for 2 seconds and then return. </br></br>'
+             'Custom action can also have customized code to enable/disable the action '
+             '(e.g. this action is only enabled on even numbered jobs). </br></br>'
+             'Additionally, you can specify whether to show the loading overlay when the action is performed. '
+             'This action has the overlay enabled. </br></br>'
+             
+             'Are you sure you want to perform a custom action?', True),
+        ],
     )
 
     context = {
@@ -78,3 +89,7 @@ def create_sample_jobs(request):
     create_job('22', 'Workflow job with multiple nodes.', 'VAR', workflow=True)
 
     return redirect(reverse('gizmo_showcase:jobs_table'))
+
+def custom_action(self):
+    sleep(2)
+    self.status = 'My Custom Status'
