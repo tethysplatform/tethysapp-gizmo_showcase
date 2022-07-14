@@ -85,9 +85,9 @@ def create_sample_jobs(request):
         create_job(i, desc, status)
         create_job(i + 10, desc, status, status_msg=f'{desc} status message')
 
-    create_job('20', 'Running multi-process job with various statuses', 'VAR')
-    create_job('21', 'Completed multi-process job with some errors', 'VCP')
-    create_job('22', 'Workflow job with multiple nodes.', 'VAR', workflow=True)
+    create_job(20, 'Running multi-process job with various statuses', 'VAR')
+    create_job(21, 'Completed multi-process job with some errors', 'VCP')
+    create_job(22, 'Workflow job with multiple nodes.', 'VAR', workflow=True)
 
     return redirect(reverse('gizmo_showcase:jobs_table'))
 
