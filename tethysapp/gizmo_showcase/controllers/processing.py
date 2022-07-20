@@ -29,15 +29,21 @@ def jobs_table(request):
         delay_loading_status=True,
         actions=[
             'run', 'pause', 'resume', 'resubmit', '|', 'logs', 'monitor', 'results', '|', 'terminate', 'delete', '|',
-            ('Custom Action', custom_action, lambda self, job_status: self.extended_properties['parity'] == 'even',
-             'Custom actions run user-defined custom code. '
-             'This custom action will sleep for 2 seconds and then return. </br></br>'
-             'Custom action can also have customized code to enable/disable the action '
-             '(e.g. this action is only enabled on jobs that have "even" as the extended property "parity"). </br></br>'
-             'Additionally, you can specify whether to show the loading overlay when the action is performed. '
-             'This action has the overlay enabled. </br></br>'
+            dict(
+                label='Custom Action',
+                callback_or_url=custom_action,
+                enabled_callback=lambda self, job_status: self.extended_properties['parity'] == 'even',
+                confirmation_message='Custom actions run user-defined custom code. '
+                    'This custom action will sleep for 2 seconds and then return. </br></br>'
+                    'Custom action can also have customized code to enable/disable the action '
+                    '(e.g. this action is only enabled on jobs that have "even" as the extended property "parity"). '
+                    '</br></br>'
+                    'Additionally, you can specify whether to show the loading overlay when the action is performed. '
+                    'This action has the overlay enabled. </br></br>'
              
-             'Are you sure you want to perform a custom action?', True),
+                    'Are you sure you want to perform a custom action?',
+                show_overlay=True
+            ),
         ],
     )
 
@@ -61,6 +67,7 @@ def jobs_table_results(request, job_id):
 def create_sample_jobs(request):
     """Controller that creates sample Jobs for the Jobs Table demo."""
     from tethys_compute.models import BasicJob, CondorWorkflow
+
     def create_job(job_id, description, status, status_msg=None, workflow=False):
         Job = CondorWorkflow if workflow else BasicJob
         job = Job(
@@ -90,6 +97,7 @@ def create_sample_jobs(request):
     create_job(22, 'Workflow job with multiple nodes.', 'VAR', workflow=True)
 
     return redirect(reverse('gizmo_showcase:jobs_table'))
+
 
 def custom_action(self):
     sleep(2)
