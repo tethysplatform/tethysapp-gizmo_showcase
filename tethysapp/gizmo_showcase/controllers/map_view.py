@@ -12,7 +12,7 @@ def get_geoserver_wms():
     Try to get the built in geoserver wms for this installation if possible.
     Otherwise point at the chpc geoserver.
     """
-    return 'https://demo.geo-solutions.it/geoserver/wms'
+    return 'https://tethys2.byu.edu/geoserver/wms'
 
 
 @controller
@@ -130,7 +130,7 @@ def map_view(request):
             ]
         )
 
-        # map_layers.append(geoserver_layer)
+        map_layers.append(geoserver_layer)
 
     # Define KML Layer
     kml_layer = MVLayer(
@@ -166,7 +166,7 @@ def map_view(request):
                   {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-130, 22, -65, 54]}}],
         layers=map_layers,
         view=view_options,
-        basemap='OpenStreetMap',
+        basemap=['OpenStreetMap'],
         draw=drawing_options,
         legend=True
     )
