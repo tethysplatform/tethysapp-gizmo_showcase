@@ -4,15 +4,17 @@ from django.contrib import messages
 import geojson
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import MapView, MVView, MVDraw, MVLayer, MVLegendClass
+from tethys_apps.exceptions import TethysAppSettingNotAssigned
 from .common import docs_endpoint
+from ..app import GizmoShowcase as app
 
 
 def get_geoserver_wms():
-    """
-    Try to get the built in geoserver wms for this installation if possible.
-    Otherwise point at the chpc geoserver.
-    """
-    return 'https://tethys2.byu.edu/geoserver/wms'
+    """Try to get the GeoServer service from setting."""
+    try:
+        return app.get_spatial_dataset_service('primary_geoserver', as_wms=True)
+    except TethysAppSettingNotAssigned:
+        return None
 
 
 @controller
@@ -114,11 +116,12 @@ def map_view(request):
 
     map_layers.append(geojson_layer)
 
-    if get_geoserver_wms():
-        # Define GeoServer Layer
+    # Define GeoServer Layer if GeoServer service provided
+    geoserver_wms = get_geoserver_wms()
+    if geoserver_wms:
         geoserver_layer = MVLayer(
             source='ImageWMS',
-            options={'url': get_geoserver_wms(),
+            options={'url': geoserver_wms,
                     'params': {'LAYERS': 'topp:states'},
                     'serverType': 'geoserver'},
             legend_title='USA Population',
