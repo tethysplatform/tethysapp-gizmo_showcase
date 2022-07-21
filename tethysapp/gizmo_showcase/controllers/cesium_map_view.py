@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from django.urls import reverse
-from django.contrib import messages
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import CesiumMapView, MVLayer
-from .common import docs_endpoint
+from .common import docs_endpoint, get_geoserver_wms
 from ..app import GizmoShowcase as app
 
 map_height = '600px'
@@ -27,7 +25,8 @@ def cesium_map_view_basic(request):
     context = {
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
-        'description': 'This example shows a basic Cesium globe.'
+        'description': 'This example shows a basic Cesium globe.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -39,6 +38,7 @@ def cesium_map_view_layers(request):
     """
     # Get the access token
     cesium_ion_token = app.get_custom_setting('cesium_ion_token')
+    layers = []
 
     # Pythonized version of the CesiumJS API
     borehole_layer = {'Bore Holes': {
@@ -53,17 +53,23 @@ def cesium_map_view_layers(request):
             }
         }
     }}
+
+    layers.append(borehole_layer)
     
     # MVLayer objects (from Map View gizmo) can be used with cesium map views
-    us_states_layer = MVLayer(
-        source='ImageWMS',
-        legend_title='US States',
-        options={
-            'url': 'https://demo.geo-solutions.it/geoserver/wms',
-            'params': {'LAYERS': 'topp:states'},
-            'serverType': 'geoserver'
-        },
-    )
+    geoserver_wms_endpoint = get_geoserver_wms()
+    if geoserver_wms_endpoint:
+        us_states_layer = MVLayer(
+            source='ImageWMS',
+            legend_title='US States',
+            options={
+                'url': geoserver_wms_endpoint,
+                'params': {'LAYERS': 'topp:states'},
+                'serverType': 'geoserver'
+            },
+        )
+
+        layers.append(us_states_layer)
     
     # Use Camera methods like setView, flyTo, lookAt, lookAtTransform, 
     # or viewBoundingSphere, to set the view
@@ -79,7 +85,7 @@ def cesium_map_view_layers(request):
         cesium_ion_token=cesium_ion_token,
         height=map_height,
         options={'shouldAnimate': False, 'timeline': False, 'homeButton': False},
-        layers=[borehole_layer, us_states_layer],
+        layers=layers,
         view=view
     )
 
@@ -90,6 +96,7 @@ def cesium_map_view_layers(request):
             'This example displays an Esri basemap service and a WMS service on a Cesium globe. Compare with the ' \
             '<a href="https://sandcastle.cesium.com/?src=Web%20Map%20Service%20(WMS).html" target="_blank">' \
             'Web Map Service (WMS) example on Sandcastle</a>.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -140,6 +147,7 @@ def cesium_map_view_terrain(request):
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
         'description': 'This example demonstrates the 3D-tiled terrain feature of Cesium globe.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -269,7 +277,8 @@ def cesium_map_view_czml(request):
             '<a href="https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/CZML-Guide" target="_blank">' \
             'CZML documents</a> on a Cesium globe. Compare with the ' \
             '<a href="https://sandcastle.cesium.com/?src=CZML%20Polygon.html" target="_blank">' \
-            'CZML Polygon example on Sandcastle</a>.'
+            'CZML Polygon example on Sandcastle</a>.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -350,6 +359,7 @@ def cesium_map_view_geojson(request):
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
         'description': 'This example shows GeoJSON data being rendered on a Cesium globe.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -438,6 +448,7 @@ def cesium_map_view_model(request):
             'This example loads 3D models on a Cesium globe from a GLB file. ' \
             'Compare with the <a href="https://sandcastle.cesium.com/?src=3D%20Models.html" target="_blank">' \
             '3D Models example on Sandcastle</a>.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -496,6 +507,7 @@ def cesium_map_view_ion(request):
         'description': 
             'This example illustrates how to load CesiumIon resources such as the ' \
             'Open Street Map 3D buildings layer displayed below. ',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)
 
@@ -518,5 +530,6 @@ def cesium_map_view_draw(request):
         'docs_endpoint': docs_endpoint,
         'cesium_map_view': cesium_map_view,
         'description': 'This example demonstrates the drawing tools capability of Cesium globe.',
+        'cesium_ion_token': cesium_ion_token,
     }
     return render(request, 'gizmo_showcase/cesium_map_view.html', context)

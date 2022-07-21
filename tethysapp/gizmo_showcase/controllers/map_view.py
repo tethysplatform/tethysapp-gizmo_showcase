@@ -5,16 +5,7 @@ import geojson
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import MapView, MVView, MVDraw, MVLayer, MVLegendClass
 from tethys_apps.exceptions import TethysAppSettingNotAssigned
-from .common import docs_endpoint
-from ..app import GizmoShowcase as app
-
-
-def get_geoserver_wms():
-    """Try to get the GeoServer service from setting."""
-    try:
-        return app.get_spatial_dataset_service('primary_geoserver', as_wms=True)
-    except TethysAppSettingNotAssigned:
-        return None
+from .common import docs_endpoint, get_geoserver_wms
 
 
 @controller

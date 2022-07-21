@@ -29,7 +29,7 @@ class GizmoShowcase(TethysAppBase):
                 name='cesium_ion_token',
                 type=CustomSetting.TYPE_STRING,
                 description='CesiumIon Token for the CesiumMapView examples.',
-                required=True,
+                required=False,
             ),
         )
         return custom_settings
