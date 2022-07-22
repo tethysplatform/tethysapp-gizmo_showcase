@@ -1,6 +1,8 @@
 from tethys_sdk.base import TethysAppBase, url_map_maker
 from tethys_sdk.app_settings import CustomSetting
 
+from tethys_sdk.app_settings import SpatialDatasetServiceSetting
+
 
 class GizmoShowcase(TethysAppBase):
     """
@@ -27,7 +29,22 @@ class GizmoShowcase(TethysAppBase):
                 name='cesium_ion_token',
                 type=CustomSetting.TYPE_STRING,
                 description='CesiumIon Token for the CesiumMapView examples.',
-                required=True,
+                required=False,
             ),
         )
         return custom_settings
+
+    def spatial_dataset_service_settings(self):
+        """
+        Example spatial_dataset_service_settings method.
+        """
+        sds_settings = (
+            SpatialDatasetServiceSetting(
+                name='primary_geoserver',
+                description='Optional GeoServer service used for map gizmo demos.',
+                engine=SpatialDatasetServiceSetting.GEOSERVER,
+                required=False,
+            ),
+        )
+
+        return sds_settings

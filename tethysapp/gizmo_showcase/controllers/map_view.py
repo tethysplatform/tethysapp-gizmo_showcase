@@ -4,15 +4,8 @@ from django.contrib import messages
 import geojson
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import MapView, MVView, MVDraw, MVLayer, MVLegendClass
-from .common import docs_endpoint
-
-
-def get_geoserver_wms():
-    """
-    Try to get the built in geoserver wms for this installation if possible.
-    Otherwise point at the chpc geoserver.
-    """
-    return 'https://demo.geo-solutions.it/geoserver/wms'
+from tethys_apps.exceptions import TethysAppSettingNotAssigned
+from .common import docs_endpoint, get_geoserver_wms
 
 
 @controller
@@ -114,11 +107,12 @@ def map_view(request):
 
     map_layers.append(geojson_layer)
 
-    if get_geoserver_wms():
-        # Define GeoServer Layer
+    # Define GeoServer Layer if GeoServer service provided
+    geoserver_wms = get_geoserver_wms()
+    if geoserver_wms:
         geoserver_layer = MVLayer(
             source='ImageWMS',
-            options={'url': get_geoserver_wms(),
+            options={'url': geoserver_wms,
                     'params': {'LAYERS': 'topp:states'},
                     'serverType': 'geoserver'},
             legend_title='USA Population',
@@ -130,7 +124,7 @@ def map_view(request):
             ]
         )
 
-        # map_layers.append(geoserver_layer)
+        map_layers.append(geoserver_layer)
 
     # Define KML Layer
     kml_layer = MVLayer(
@@ -166,7 +160,7 @@ def map_view(request):
                   {'ZoomToExtent': {'projection': 'EPSG:4326', 'extent': [-130, 22, -65, 54]}}],
         layers=map_layers,
         view=view_options,
-        basemap='OpenStreetMap',
+        basemap=['OpenStreetMap'],
         draw=drawing_options,
         legend=True
     )
