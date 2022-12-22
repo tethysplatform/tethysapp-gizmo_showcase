@@ -7,8 +7,6 @@ from bokeh.models import ColumnDataSource, RangeTool, HoverTool
 from bokeh.palettes import Category20c
 from bokeh.plotting import figure
 from bokeh.transform import cumsum, dodge
-from bokeh.sampledata.penguins import data as penguin_data
-from bokeh.sampledata.stocks import AAPL
 from bokeh.transform import factor_cmap, factor_mark
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import BokehView
@@ -20,6 +18,8 @@ def bokeh_view(request):
     """
     Controller for the Bokeh View page.
     """
+    from bokeh.sampledata.penguins import data as penguin_data
+    from bokeh.sampledata.stocks import AAPL
     # Scatter plot
     SPECIES = sorted(penguin_data.species.unique())
     MARKERS = ['hex', 'circle_x', 'triangle']

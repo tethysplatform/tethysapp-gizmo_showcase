@@ -16,8 +16,7 @@ def map_view(request):
     # Define view options
     view_options = MVView(
         projection='EPSG:4326',
-        center=[-100, 40],
-        zoom=3.5,
+        extent=[-65.69, 23.81, -129.17, 49.38],  # USA EPSG:4326
         maxZoom=18,
         minZoom=2
     )
@@ -143,9 +142,8 @@ def map_view(request):
     # Tiled ArcGIS REST Layer
     arc_gis_layer = MVLayer(
         source='TileArcGISRest',
-        options={'url': 'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/' +
-                        'Specialty/ESRI_StateCityHighway_USA/MapServer'},
-        legend_title='ESRI USA Highway',
+        options={'url': 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer'},
+        legend_title='NLCD Land Cover',
         legend_extent=[-173, 17, -65, 72]
     )
 
