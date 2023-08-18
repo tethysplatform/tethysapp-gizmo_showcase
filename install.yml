@@ -13,7 +13,9 @@ requirements:
     - geojson
     - numpy
     - pandas
-
+    - bokeh<3
+    - plotly
   pip:
 
 post:
+  - install.sh
