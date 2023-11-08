@@ -138,7 +138,6 @@ def bokeh_view(request):
     select.line('date', 'close', source=source)
     select.ygrid.grid_line_color = None
     select.add_tools(range_tool)
-    select.toolbar.active_multi = range_tool
     
     time_series_plot = BokehView(column(time_series_fig, select))
     
