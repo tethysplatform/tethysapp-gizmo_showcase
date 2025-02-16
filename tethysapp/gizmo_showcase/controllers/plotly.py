@@ -86,7 +86,7 @@ def plotly_view(request):
         xaxis_tickfont_size=14,
         yaxis=dict(
             title='USD (millions)',
-            titlefont_size=16,
+            title_font_size=16,
             tickfont_size=14,
         ),
         legend=dict(
