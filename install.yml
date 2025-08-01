@@ -17,6 +17,7 @@ requirements:
     - plotly
 
   pip:
+    - bokeh-sampledata
 
 post:
   - install.sh
