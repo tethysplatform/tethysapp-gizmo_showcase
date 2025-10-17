@@ -12,7 +12,7 @@ def jobs_table(request):
     Controller for the Jobs Table page.
     """
     from tethys_compute.models import TethysJob
-    jobs = TethysJob.objects.filter(label='gizmos_showcase').order_by('id').select_subclasses()
+    jobs = TethysJob.objects.filter(label='gizmo_showcase').order_by('id').select_subclasses()
 
     # Table View
     jobs_table_options = JobsTable(
@@ -74,7 +74,7 @@ def create_sample_jobs(request):
             name=f'job_{job_id}',
             user=request.user,
             description=description,
-            label='gizmos_showcase',
+            label='gizmo_showcase',
             status_message=status_msg,
             _status=status,
             extended_properties={'parity': 'even' if job_id % 2 == 0 else 'odd'}
