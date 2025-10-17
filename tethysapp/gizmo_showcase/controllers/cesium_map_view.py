@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import requests
 from tethys_sdk.routing import controller
 from tethys_sdk.gizmos import CesiumMapView, MVLayer
 from .common import docs_endpoint, get_geoserver_wms
@@ -41,20 +43,25 @@ def cesium_map_view_layers(request):
     layers = []
 
     # Pythonized version of the CesiumJS API
-    borehole_layer = {'Bore Holes': {
-        'imageryProvider': {
-            'Cesium.WebMapServiceImageryProvider': {
-                'url': 'https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows',
-                'layers': 'Hydrography:bores',
-                'parameters': {
-                    'transparent': True,
-                    'format': 'image/png'
+    basins_layer = {
+        'Basins': {
+            'imageryProvider': {
+                'Cesium.WebMapServiceImageryProvider': {
+                    'url': 'https://services.ga.gov.au/gis/services/Surface_Hydrology/MapServer/WmsServer',
+                    'layers': 'Basins',
+                    'parameters': {
+                        'transparent': True,
+                        'format': 'image/png',
+                        'service': 'WMS',
+                        'version': '1.3.0',
+                        'srs': 'EPSG:4326'
+                    }
                 }
             }
         }
-    }}
+    }
 
-    layers.append(borehole_layer)
+    layers.append(basins_layer)    
     
     # MVLayer objects (from Map View gizmo) can be used with cesium map views
     geoserver_wms_endpoint = get_geoserver_wms()
@@ -84,7 +91,7 @@ def cesium_map_view_layers(request):
     cesium_map_view = CesiumMapView(
         cesium_ion_token=cesium_ion_token,
         height=map_height,
-        options={'shouldAnimate': False, 'timeline': False, 'homeButton': False},
+        options={'shouldAnimate': False, 'timeline': False, 'homeButton': False, 'baseLayerPicker': True},
         layers=layers,
         view=view
     )
